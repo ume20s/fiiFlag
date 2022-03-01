@@ -1,0 +1,47 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Image\btnRd.png" />
+    <None Remove="Image\btnRu.png" />
+    <None Remove="Image\btnWd.png" />
+    <None Remove="Image\btnWu.png" />
+    <None Remove="Image\RdWd_1.png" />
+    <None Remove="Image\RdWd_2.png" />
+    <None Remove="Image\RdWu_1.png" />
+    <None Remove="Image\RdWu_2.png" />
+    <None Remove="Image\RuWd_1.png" />
+    <None Remove="Image\RuWd_2.png" />
+    <None Remove="Image\RuWu_1.png" />
+    <None Remove="Image\RuWu_2.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Image\btnRd.png" />
+    <EmbeddedResource Include="Image\btnRu.png" />
+    <EmbeddedResource Include="Image\btnWd.png" />
+    <EmbeddedResource Include="Image\btnWu.png" />
+    <EmbeddedResource Include="Image\RdWd_1.png" />
+    <EmbeddedResource Include="Image\RdWd_2.png" />
+    <EmbeddedResource Include="Image\RdWu_1.png" />
+    <EmbeddedResource Include="Image\RdWu_2.png" />
+    <EmbeddedResource Include="Image\RuWd_1.png" />
+    <EmbeddedResource Include="Image\RuWd_2.png" />
+    <EmbeddedResource Include="Image\RuWu_1.png" />
+    <EmbeddedResource Include="Image\RuWu_2.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2196" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
+  </ItemGroup>
+</Project>
