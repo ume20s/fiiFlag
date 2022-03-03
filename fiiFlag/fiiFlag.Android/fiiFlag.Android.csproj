@@ -117,5 +117,8 @@
   <ItemGroup>
     <AndroidResource Include="Resources\raw\pinpon.wav" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\raw\akaagete.wav" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

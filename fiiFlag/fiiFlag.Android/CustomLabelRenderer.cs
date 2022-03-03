@@ -13,7 +13,7 @@ namespace fiiFlag.Droid.Renderer
         //Fontを使いまわす為
         private static Typeface _font = null;
 
-        protected override async void OnElementChanged(ElementChangedEventArgs<Label> e)
+        protected override void OnElementChanged(ElementChangedEventArgs<Label> e)
         {
             base.OnElementChanged(e);
 
