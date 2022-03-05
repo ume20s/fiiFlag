@@ -11,7 +11,7 @@ namespace fiiFlag
     // 音声再生のためのインターフェースの作成
     public interface IMediaPlayer
     {
-        Task PlayAsync(string title);
+        Task PlayAsync(string title, float rate);
         void Stop();
         bool NowPlaying();
     }
@@ -98,15 +98,18 @@ namespace fiiFlag
                 soundEffect.SoundPlay(0);
             };
             _btn[1].Down += (sender, a) => {
+                VoicePlayer.Stop();
                 _fii[RedFlag, WhiteFlag, Asi].IsVisible = false;
                 WhiteFlag = UP;
                 _fii[RedFlag, WhiteFlag, Asi].IsVisible = true;
+                VoicePlayer.PlayAsync("akaagete", 1.8f);
             };
             _btn[2].Down += (sender, a) => {
+                VoicePlayer.Stop();
                 _fii[RedFlag, WhiteFlag, Asi].IsVisible = false;
                 RedFlag = DOWN;
                 _fii[RedFlag, WhiteFlag, Asi].IsVisible = true;
-                VoicePlayer.PlayAsync("buu");
+                VoicePlayer.PlayAsync("akaagete", 0.5f);
             };
             _btn[3].Down += (sender, a) => {
                 _fii[RedFlag, WhiteFlag, Asi].IsVisible = false;
@@ -135,7 +138,7 @@ namespace fiiFlag
             int i;
 
             // カウントダウン
-            i = 5;
+            i = 1;
             while (true && i > 0) {
                 btnStart.Text = i.ToString();
                 await System.Threading.Tasks.Task.Delay(1000);

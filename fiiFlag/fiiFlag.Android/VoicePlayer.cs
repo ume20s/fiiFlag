@@ -9,18 +9,27 @@ namespace fiiFlag.Droid
     class VoicePlayer : IMediaPlayer
     {
         MediaPlayer player = null;
+        PlaybackParams playbackParams;
 
         [Obsolete]
-        private async Task StartPlayerAsync(string title)
+        private async Task StartPlayerAsync(string title, float rate)
         {
             var resourceId = (int)typeof(Resource.Raw).GetField(title).GetValue(null);
 
             await Task.Run(() => {
                 if (player == null) {
+                    // MediaPlayer関係の初期化
                     player = new MediaPlayer();
                     player.SetAudioStreamType(Stream.Music);
                     player = MediaPlayer.Create(global::Android.App.Application.Context, resourceId);
                     player.Looping = false;
+
+                    // PlaybackParams関係の初期化
+                    playbackParams = new PlaybackParams();
+                    playbackParams.SetSpeed(rate);
+                    player.PlaybackParams = playbackParams;
+
+                    // 再生開始
                     player.Start();
                 } else {
                     if (player.IsPlaying == true) {
@@ -74,9 +83,9 @@ namespace fiiFlag.Droid
         }
 
         [Obsolete]
-        public async Task PlayAsync(string title)
+        public async Task PlayAsync(string title, float rate)
         {
-            await StartPlayerAsync(title);
+            await StartPlayerAsync(title, rate);
         }
 
         public void Stop()
