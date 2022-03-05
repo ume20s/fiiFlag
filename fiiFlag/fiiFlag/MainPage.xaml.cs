@@ -24,19 +24,65 @@ namespace fiiFlag
 
     public partial class MainPage : ContentPage
     {
-        private ExImage[] _btn;         // ボタンのイメージコントロール配列
-        private Image[,,] _fii;         // ふぃーちゃんイメージコントロール配列
-        bool NowPlaying = false;        // ゲーム中フラグ
-        const int RED = 0;              // 色定数
-        const int WHITE = 1;
-        const int UP = 0;               // 旗の状態定数
-        const int DOWN = 1;
-        const int JITA = 0;             // ジタバタ定数
-        const int BATA = 1;
+        private ExImage[] _btn;             // ボタンのイメージコントロール配列
+        private Image[,,] _fii;             // ふぃーちゃんイメージコントロール配列
+        private bool NowPlaying = false;    // ゲーム中フラグ
+        private float Speed;                // セリフスピード
+        private int Wait;                   // セリフ間ウエイト
+        private int score;                  // スコア
+        private int highscore;              // ハイスコア
 
-        int RedFlag = DOWN;             // 赤白旗の状態
-        int WhiteFlag = DOWN;
-        int Asi = JITA;                 // 足の状態
+        // ハイスコア用のファイル
+        private string localAppData = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "HighScore.txt";
+
+        const int RED = 0;                  // 色定数
+        const int WHITE = 1;
+        const int UP = 0;                   // 旗の状態定数
+        const int DOWN = 1;
+        const int JITA = 0;                 // ジタバタ定数
+        const int BATA = 1;
+        const int PINPON = 0;               // 判定効果音
+        const int BUU = 1;
+
+        // 赤白旗の状態（赤、白の順）
+        int[] Stat = new int[2] { DOWN, DOWN };
+
+        int Asi = JITA;                     // 足の状態
+
+        // 旗上げ指示セリフの構造体配列
+        struct actData {
+            public string comm;
+            public int col;
+            public int pos;
+
+            public actData(string p1, int p2, int p3)
+            {
+                this.comm = p1;
+                this.col = p2;
+                this.pos = p3;
+            }
+        }
+        actData[] session = {
+            new actData("AkaAgeru",RED,UP),
+            new actData("AkaAgenai",RED,DOWN),
+            new actData("AkaSageru",RED,DOWN),
+            new actData("AkaSagenai",RED,UP),
+            new actData("ShiroAgeru",WHITE,UP),
+            new actData("ShiroAgenai",WHITE,DOWN),
+            new actData("ShiroSageru",WHITE,DOWN),
+            new actData("ShiroSagenai",WHITE,UP),
+            new actData("AkaAgete",RED,UP),
+            new actData("AkaAgenaide",RED,DOWN),
+            new actData("AkaSagete",RED,DOWN),
+            new actData("AkaSagenaide",RED,UP),
+            new actData("ShiroAgete",WHITE,UP),
+            new actData("ShiroAgenaide",WHITE,DOWN),
+            new actData("ShiroSagete",WHITE,DOWN),
+            new actData("ShiroSagenaide",WHITE,UP)
+        };
+
+        // 乱数発生用変数
+        System.Random r = new System.Random();
 
         // 音声と効果音再生のためのインターフェースの実装
         private IMediaPlayer VoicePlayer = DependencyService.Get<IMediaPlayer>();
@@ -48,6 +94,18 @@ namespace fiiFlag
 
             // おおもとの初期化
             InitializeComponent();
+
+            // 事前のハイスコア処理
+            if (System.IO.File.Exists(localAppData)) {
+                // ハイスコアファイルがあったら読み込む
+                using (System.IO.StreamReader sr = new System.IO.StreamReader(localAppData)) {
+                    highscore = int.Parse(sr.ReadToEnd());
+                }
+            } else {
+                // ハイスコアファイルが無かったらハイスコアは０
+                highscore = 0;
+            }
+            highscoreLabel.Text = " はいすこあ: " + highscore.ToString("####0");
 
             // グリッドの準備
             Grid grid;
@@ -75,7 +133,7 @@ namespace fiiFlag
             _fii[DOWN, DOWN, BATA].Source = ImageSource.FromResource("fiiFlag.Image.RdWd_2.png");
 
             // とりあえず赤白とも下げておく
-            _fii[RedFlag, WhiteFlag, Asi].IsVisible = true;
+            _fii[Stat[RED], Stat[WHITE], Asi].IsVisible = true;
 
             // 操作ボタンイメージ配列の格納
             _btn = new ExImage[4];
@@ -92,29 +150,24 @@ namespace fiiFlag
 
             // タッチイベントの実装
             _btn[0].Down += (sender, a) => {
-                _fii[RedFlag, WhiteFlag, Asi].IsVisible = false;
-                RedFlag = UP;
-                _fii[RedFlag, WhiteFlag, Asi].IsVisible = true;
-                soundEffect.SoundPlay(0);
+                _fii[Stat[RED], Stat[WHITE], Asi].IsVisible = false;
+                Stat[RED] = UP;
+                _fii[Stat[RED], Stat[WHITE], Asi].IsVisible = true;
             };
             _btn[1].Down += (sender, a) => {
-                VoicePlayer.Stop();
-                _fii[RedFlag, WhiteFlag, Asi].IsVisible = false;
-                WhiteFlag = UP;
-                _fii[RedFlag, WhiteFlag, Asi].IsVisible = true;
-                VoicePlayer.PlayAsync("akaagete", 1.8f);
+                _fii[Stat[RED], Stat[WHITE], Asi].IsVisible = false;
+                Stat[WHITE] = UP;
+                _fii[Stat[RED], Stat[WHITE], Asi].IsVisible = true;
             };
             _btn[2].Down += (sender, a) => {
-                VoicePlayer.Stop();
-                _fii[RedFlag, WhiteFlag, Asi].IsVisible = false;
-                RedFlag = DOWN;
-                _fii[RedFlag, WhiteFlag, Asi].IsVisible = true;
-                VoicePlayer.PlayAsync("akaagete", 0.5f);
+                _fii[Stat[RED], Stat[WHITE], Asi].IsVisible = false;
+                Stat[RED] = DOWN;
+                _fii[Stat[RED], Stat[WHITE], Asi].IsVisible = true;
             };
             _btn[3].Down += (sender, a) => {
-                _fii[RedFlag, WhiteFlag, Asi].IsVisible = false;
-                WhiteFlag = DOWN;
-                _fii[RedFlag, WhiteFlag, Asi].IsVisible = true;
+                _fii[Stat[RED], Stat[WHITE], Asi].IsVisible = false;
+                Stat[WHITE] = DOWN;
+                _fii[Stat[RED], Stat[WHITE], Asi].IsVisible = true;
             };
 
             // タイマー処理
@@ -125,33 +178,118 @@ namespace fiiFlag
                 }
 
                 // 足のジタバタ処理
-                _fii[RedFlag, WhiteFlag, Asi].IsVisible = false;
+                _fii[Stat[RED], Stat[WHITE], Asi].IsVisible = false;
                 Asi = (Asi + 1) % 2;
-                _fii[RedFlag, WhiteFlag, Asi].IsVisible = true;
+                _fii[Stat[RED], Stat[WHITE], Asi].IsVisible = true;
 
                 return true;
             });
         }
 
-        public async void OnStartButtonClicked(Object o, EventArgs e)
+        private async void OnStartButtonClicked(Object o, EventArgs e)
         {
-            int i;
+            int i;            // 有象無象
+            int action;       // 旗上げ指示
 
-            // カウントダウン
-            i = 1;
-            while (true && i > 0) {
-                btnStart.Text = i.ToString();
-                await System.Threading.Tasks.Task.Delay(1000);
-                i -= 1;
-            }
-            // スタートボタンを隠して操作ボタンを表示
-            btnStart.IsVisible = false;
-            for (i=0; i<4; i++) {
-                _btn[i].IsVisible = true;
-            }
+            // ナウプレイングじゃなかったら実行
+            if (NowPlaying == false) {
+                // もろもろの初期化
+                InitFii();
 
-            // ゲーム中
-            NowPlaying = true;
+                // カウントダウン
+                i = 5;
+                while (i > 0) {
+                    btnStart.Text = i.ToString();
+                    await System.Threading.Tasks.Task.Delay(1000);
+                    i -= 1;
+                }
+
+                // スタートボタンを隠して操作ボタンを表示
+                btnStart.IsVisible = false;
+                for (i = 0; i < 4; i++) {
+                    _btn[i].IsVisible = true;
+                }
+
+                // ゲーム中
+                NowPlaying = true;
+                Speed = 0.6f;
+                Wait = 2200;
+
+                // ゲームは25回+1回
+                for (i = 0; i < 25; i++) {
+                    action = r.Next(0, 16);
+                    VoicePlayer.Stop();
+                    await VoicePlayer.PlayAsync(session[action].comm, Speed);
+                    await System.Threading.Tasks.Task.Delay(Wait);
+                    if (Stat[session[action].col] == session[action].pos) {
+                        soundEffect.SoundPlay(PINPON);
+                        score += 10;
+                        scoreLabel.Text = " てんすう: " + score.ToString("####0");
+                        if (score > highscore) {
+                            highscore = score;
+                            highscoreLabel.Text = " はいすこあ: " + highscore.ToString("####0");
+                        }
+                    } else {
+                        soundEffect.SoundPlay(BUU);
+                    }
+                    Speed += 0.08f;
+                    Wait -= 70;
+                }
+
+                // 最後の１回は断定調のセリフで終わる
+                action = r.Next(0, 8);
+                VoicePlayer.Stop();
+                await VoicePlayer.PlayAsync(session[action].comm, Speed);
+                await System.Threading.Tasks.Task.Delay(Wait);
+                if (Stat[session[action].col] == session[action].pos) {
+                    soundEffect.SoundPlay(PINPON);
+                    score += 10;
+                    scoreLabel.Text = " てんすう: " + score.ToString("####0");
+                    if (score > highscore) {
+                        highscore = score;
+                        highscoreLabel.Text = " はいすこあ: " + highscore.ToString("####0");
+                    }
+                } else {
+                    soundEffect.SoundPlay(BUU);
+                }
+
+                // ハイスコアの保存
+                using (System.IO.StreamWriter sw = new System.IO.StreamWriter(localAppData)) {
+                    sw.Write(highscore.ToString());
+                }
+
+                // スタートボタンを表示しなおして終了
+                btnStart.Text = "げえむおおばぁ";
+                btnStart.IsVisible = true;
+                for (i = 0; i < 4; i++) {
+                    _btn[i].IsVisible = false;
+                }
+                await System.Threading.Tasks.Task.Delay(2000);
+                btnStart.Text = "もういっかい？";
+                NowPlaying = false;
+            }
+        }
+
+        private void InitFii()
+        {
+            int i, j, k;
+
+            // 赤白旗を下げておく
+            for (i = 0; i < 2; i++) {
+                for (j = 0; j < 2; j++) {
+                    for (k = 0; k < 2; k++) {
+                        _fii[i, j, k].IsVisible = false;
+                    }
+                }
+            }
+            Stat[RED] = DOWN;
+            Stat[WHITE] = DOWN;
+            Asi = JITA;
+            _fii[Stat[RED], Stat[WHITE], Asi].IsVisible = true;
+
+            // スコアをゼロクリア
+            score = 0;
+            scoreLabel.Text = "てんすう: " + score.ToString("####0");
         }
     }
 }

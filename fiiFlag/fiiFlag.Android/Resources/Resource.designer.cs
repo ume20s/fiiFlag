@@ -18812,13 +18812,58 @@ namespace fiiFlag.Droid
 		{
 			
 			// aapt resource value: 0x7F0E0000
-			public const int akaagete = 2131623936;
+			public const int AkaAgenai = 2131623936;
 			
 			// aapt resource value: 0x7F0E0001
-			public const int buu = 2131623937;
+			public const int AkaAgenaide = 2131623937;
 			
 			// aapt resource value: 0x7F0E0002
-			public const int pinpon = 2131623938;
+			public const int AkaAgeru = 2131623938;
+			
+			// aapt resource value: 0x7F0E0003
+			public const int AkaAgete = 2131623939;
+			
+			// aapt resource value: 0x7F0E0004
+			public const int AkaSagenai = 2131623940;
+			
+			// aapt resource value: 0x7F0E0005
+			public const int AkaSagenaide = 2131623941;
+			
+			// aapt resource value: 0x7F0E0006
+			public const int AkaSageru = 2131623942;
+			
+			// aapt resource value: 0x7F0E0007
+			public const int AkaSagete = 2131623943;
+			
+			// aapt resource value: 0x7F0E0008
+			public const int buu = 2131623944;
+			
+			// aapt resource value: 0x7F0E0009
+			public const int pinpon = 2131623945;
+			
+			// aapt resource value: 0x7F0E000A
+			public const int ShiroAgenai = 2131623946;
+			
+			// aapt resource value: 0x7F0E000B
+			public const int ShiroAgenaide = 2131623947;
+			
+			// aapt resource value: 0x7F0E000C
+			public const int ShiroAgeru = 2131623948;
+			
+			// aapt resource value: 0x7F0E000D
+			public const int ShiroAgete = 2131623949;
+			
+			// aapt resource value: 0x7F0E000E
+			public const int ShiroSagenai = 2131623950;
+			
+			// aapt resource value: 0x7F0E000F
+			public const int ShiroSagenaide = 2131623951;
+			
+			// aapt resource value: 0x7F0E0010
+			public const int ShiroSageru = 2131623952;
+			
+			// aapt resource value: 0x7F0E0011
+			public const int ShiroSagete = 2131623953;
 			
 			static Raw()
 			{
