@@ -165,5 +165,44 @@
   <ItemGroup>
     <AndroidResource Include="Resources\raw\ShiroSagete.wav" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\raw\ganbaru.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\raw\ichi.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\raw\ni.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\raw\san.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\raw\Gameover1.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\raw\Gameover2.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\raw\Gameover3.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\raw\Gameover4.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\raw\GameoverKichiku.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\raw\Startin1.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\raw\Startin2.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\raw\Startin3.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\raw\StartinKichiku.wav" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

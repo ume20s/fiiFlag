@@ -49,6 +49,21 @@ namespace fiiFlag
 
         int Asi = JITA;                     // 足の状態
 
+        // 最初の掛け声の配列
+        string[] Startin = new string[4] {
+            "Startin1","Startin2","Startin3","StartinKichiku"
+        };
+
+        // カウントダウンのセリフの配列
+        string[] CountDown = new string[3] {
+            "ichi","ni","san"
+        };
+
+        // ゲームオーバーのセリフの配列
+        string[] Gameover = new string[5] {
+            "Gameover1","Gameover2","Gameover3","Gameover4","GameoverKichiku"
+        };
+
         // 旗上げ指示セリフの構造体配列
         struct actData {
             public string comm;
@@ -91,6 +106,9 @@ namespace fiiFlag
         public MainPage()
         {
             int i,j,k;                   // 有象無象
+
+            // 最初の掛け声
+            VoicePlayer.PlayAsync(Startin[r.Next(0, 3)], 1.0f);
 
             // おおもとの初期化
             InitializeComponent();
@@ -197,10 +215,13 @@ namespace fiiFlag
                 InitFii();
 
                 // カウントダウン
-                i = 5;
+                i = 3;
                 while (i > 0) {
                     btnStart.Text = i.ToString();
-                    await System.Threading.Tasks.Task.Delay(1000);
+                    VoicePlayer.Stop();
+                    await VoicePlayer.PlayAsync(CountDown[i-1], 1.0f);
+                    await Task.Run(TalkWait);
+                    await System.Threading.Tasks.Task.Delay(500);
                     i -= 1;
                 }
 
@@ -213,13 +234,15 @@ namespace fiiFlag
                 // ゲーム中
                 NowPlaying = true;
                 Speed = 0.6f;
-                Wait = 2200;
+                Wait = 1000;
+                action = 0;
 
-                // ゲームは25回+1回
-                for (i = 0; i < 25; i++) {
-                    action = r.Next(0, 16);
+                // ゲームは25回 (+最後の1回)
+                for (i = 0; i < 2; i++) {
+                    action = (action + r.Next(1, 16)) % 16;
                     VoicePlayer.Stop();
                     await VoicePlayer.PlayAsync(session[action].comm, Speed);
+                    await Task.Run(TalkWait);
                     await System.Threading.Tasks.Task.Delay(Wait);
                     if (Stat[session[action].col] == session[action].pos) {
                         soundEffect.SoundPlay(PINPON);
@@ -233,13 +256,14 @@ namespace fiiFlag
                         soundEffect.SoundPlay(BUU);
                     }
                     Speed += 0.08f;
-                    Wait -= 70;
+                    Wait -= 38;
                 }
 
                 // 最後の１回は断定調のセリフで終わる
                 action = r.Next(0, 8);
                 VoicePlayer.Stop();
                 await VoicePlayer.PlayAsync(session[action].comm, Speed);
+                await Task.Run(TalkWait);
                 await System.Threading.Tasks.Task.Delay(Wait);
                 if (Stat[session[action].col] == session[action].pos) {
                     soundEffect.SoundPlay(PINPON);
@@ -253,6 +277,9 @@ namespace fiiFlag
                     soundEffect.SoundPlay(BUU);
                 }
 
+                // ちょい待ってから
+                await System.Threading.Tasks.Task.Delay(800);
+
                 // ハイスコアの保存
                 using (System.IO.StreamWriter sw = new System.IO.StreamWriter(localAppData)) {
                     sw.Write(highscore.ToString());
@@ -264,10 +291,19 @@ namespace fiiFlag
                 for (i = 0; i < 4; i++) {
                     _btn[i].IsVisible = false;
                 }
-                await System.Threading.Tasks.Task.Delay(2000);
+                VoicePlayer.Stop();
+                await VoicePlayer.PlayAsync(Gameover[r.Next(0, 4)], 1.0f);
+                await Task.Run(TalkWait);
+                await System.Threading.Tasks.Task.Delay(200);
                 btnStart.Text = "もういっかい？";
                 NowPlaying = false;
             }
+        }
+
+        private void TalkWait()
+        {
+            while (VoicePlayer.NowPlaying() == true) { }
+            
         }
 
         private void InitFii()

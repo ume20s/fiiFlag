@@ -18839,31 +18839,70 @@ namespace fiiFlag.Droid
 			public const int buu = 2131623944;
 			
 			// aapt resource value: 0x7F0E0009
-			public const int pinpon = 2131623945;
+			public const int Gameover1 = 2131623945;
 			
 			// aapt resource value: 0x7F0E000A
-			public const int ShiroAgenai = 2131623946;
+			public const int Gameover2 = 2131623946;
 			
 			// aapt resource value: 0x7F0E000B
-			public const int ShiroAgenaide = 2131623947;
+			public const int Gameover3 = 2131623947;
 			
 			// aapt resource value: 0x7F0E000C
-			public const int ShiroAgeru = 2131623948;
+			public const int Gameover4 = 2131623948;
 			
 			// aapt resource value: 0x7F0E000D
-			public const int ShiroAgete = 2131623949;
+			public const int GameoverKichiku = 2131623949;
 			
 			// aapt resource value: 0x7F0E000E
-			public const int ShiroSagenai = 2131623950;
+			public const int ganbaru = 2131623950;
 			
 			// aapt resource value: 0x7F0E000F
-			public const int ShiroSagenaide = 2131623951;
+			public const int ichi = 2131623951;
 			
 			// aapt resource value: 0x7F0E0010
-			public const int ShiroSageru = 2131623952;
+			public const int ni = 2131623952;
 			
 			// aapt resource value: 0x7F0E0011
-			public const int ShiroSagete = 2131623953;
+			public const int pinpon = 2131623953;
+			
+			// aapt resource value: 0x7F0E0012
+			public const int san = 2131623954;
+			
+			// aapt resource value: 0x7F0E0013
+			public const int ShiroAgenai = 2131623955;
+			
+			// aapt resource value: 0x7F0E0014
+			public const int ShiroAgenaide = 2131623956;
+			
+			// aapt resource value: 0x7F0E0015
+			public const int ShiroAgeru = 2131623957;
+			
+			// aapt resource value: 0x7F0E0016
+			public const int ShiroAgete = 2131623958;
+			
+			// aapt resource value: 0x7F0E0017
+			public const int ShiroSagenai = 2131623959;
+			
+			// aapt resource value: 0x7F0E0018
+			public const int ShiroSagenaide = 2131623960;
+			
+			// aapt resource value: 0x7F0E0019
+			public const int ShiroSageru = 2131623961;
+			
+			// aapt resource value: 0x7F0E001A
+			public const int ShiroSagete = 2131623962;
+			
+			// aapt resource value: 0x7F0E001B
+			public const int Startin1 = 2131623963;
+			
+			// aapt resource value: 0x7F0E001C
+			public const int Startin2 = 2131623964;
+			
+			// aapt resource value: 0x7F0E001D
+			public const int Startin3 = 2131623965;
+			
+			// aapt resource value: 0x7F0E001E
+			public const int StartinKichiku = 2131623966;
 			
 			static Raw()
 			{
