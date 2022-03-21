@@ -202,6 +202,9 @@ namespace fiiFlag
 
                 return true;
             });
+
+            // 面セレクトページの表示
+            Navigation.PushModalAsync(new SelectPage(), false);
         }
 
         private async void OnStartButtonClicked(Object o, EventArgs e)
@@ -238,6 +241,7 @@ namespace fiiFlag
                 action = 0;
 
                 // ゲームは25回 (+最後の1回)
+                // for (i = 0; i < 25; i++) {
                 for (i = 0; i < 2; i++) {
                     action = (action + r.Next(1, 16)) % 16;
                     VoicePlayer.Stop();
@@ -303,7 +307,6 @@ namespace fiiFlag
         private void TalkWait()
         {
             while (VoicePlayer.NowPlaying() == true) { }
-            
         }
 
         private void InitFii()

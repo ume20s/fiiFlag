@@ -23,6 +23,9 @@
     <None Remove="Image\RuWd_2.png" />
     <None Remove="Image\RuWu_1.png" />
     <None Remove="Image\RuWu_2.png" />
+    <None Remove="Image\Select1.png" />
+    <None Remove="Image\Select2.png" />
+    <None Remove="Image\Select3.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,10 +41,19 @@
     <EmbeddedResource Include="Image\RuWd_2.png" />
     <EmbeddedResource Include="Image\RuWu_1.png" />
     <EmbeddedResource Include="Image\RuWu_2.png" />
+    <EmbeddedResource Include="Image\Select1.png" />
+    <EmbeddedResource Include="Image\Select2.png" />
+    <EmbeddedResource Include="Image\Select3.png" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2196" />
     <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="SelectPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>
