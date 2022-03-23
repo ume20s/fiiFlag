@@ -52,7 +52,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="SelectPage.xaml">
+    <EmbeddedResource Update="GamePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

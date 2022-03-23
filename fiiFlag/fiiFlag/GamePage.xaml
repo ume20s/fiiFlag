@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="fiiFlag.GamePage" xmlns:app="clr-namespace:fiiFlag.Controls;assembly=fiiFlag">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="TextColor" Value="#000000" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid x:Name="g" BackgroundColor="#eeeeee">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60" />
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="0.8*" />
+            <RowDefinition Height="0.8*" />
+            <RowDefinition Height="0.1*" />
+        </Grid.RowDefinitions>
+        <app:BaseLabel x:Name="scoreLabel"  Grid.Row="0" Grid.Column="0" 
+                   FontSize="20" Text = " てんすう: 0" HorizontalOptions="Center" VerticalOptions="Center" />
+        <app:BaseLabel x:Name="highscoreLabel" Grid.Row="0" Grid.Column="1" 
+                   FontSize="16" Text = " はいすこあ: 0" HorizontalOptions="Center" VerticalOptions="Center" />
+        <Image Source="" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"/>
+        <app:BaseButton x:Name="btnStart" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="2"
+                FontSize="40" Text="すたあと" IsVisible="true" Clicked="OnStartButtonClicked" />
+        <app:BaseButton x:Name="btnOnemore" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="2"
+                FontSize="40" Text="もういっかい" IsVisible="false" Clicked="OnOnemoreButtonClicked" />
+    </Grid>
+</ContentPage>
