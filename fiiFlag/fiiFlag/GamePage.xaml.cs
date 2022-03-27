@@ -48,6 +48,26 @@ namespace fiiFlag
         const int FUTU = 1;
         const int KICHIKU = 2;
 
+        // 得点
+        int[,] point = new int[3, 25] {
+            { 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 22, 24, 26, 28, 30, 32, 36, 40, 44},
+            { 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 40, 44, 48, 52, 56, 60, 64, 68, 72, 76, 80},
+            { 20, 22, 24, 26, 28, 30, 32, 34, 36, 40, 44, 48, 52, 56, 60, 64, 68, 72, 76, 80, 84, 88, 92, 96, 100}
+        };
+
+
+        // 発声スピードの初期値
+        float[] s0 = new float[3] { 0.75f, 1.0f, 1.2f };
+
+        // 発声スピードの変化量
+        float[] ds = new float[3] { 0.04f, 0.06f, 0.1f };
+
+        // ウエイト時間の初期値
+        int[] w0 = new int[3] { 1000, 800, 0 };
+
+        // ウエイト時間の変化量
+        int[] dw = new int[3] { 40, 40, 0 };
+
         // 赤白旗の状態（赤、白の順）
         int[] Stat = new int[2] { DOWN, DOWN };
 
@@ -230,30 +250,13 @@ namespace fiiFlag
                     _btn[i].IsVisible = true;
                 }
 
-                // 難易度設定
-                switch (StageLevel) {
-                    case KANTAN:
-                        Speed = 0.6f;
-                        Wait = 1000;
-                        break;
-                    case FUTU:
-                        Speed = 1.0f;
-                        Wait = 800;
-                        break;
-                    case KICHIKU:
-                        Speed = 1.2f;
-                        Wait = 0;
-                        break;
-                    default:
-                        Speed = 0.6f;
-                        Wait = 1000;
-                        break;
-                }
+                // 難易度による初期値の設定
+                Speed = s0[StageLevel];
+                Wait = w0[StageLevel];
                 action = 0;
 
-                // ゲームは25回 (+最後の1回)
-                // for (i = 0; i < 25; i++) {
-                for (i = 0; i < 2; i++) {
+                // ゲームは24回 (+最後の1回)
+                for (i = 0; i < 24; i++) {
                     action = (action + r.Next(1, 16)) % 16;
                     VoicePlayer.Stop();
                     await VoicePlayer.PlayAsync(session[action].comm, Speed);
@@ -261,7 +264,7 @@ namespace fiiFlag
                     await System.Threading.Tasks.Task.Delay(Wait);
                     if (Stat[session[action].col] == session[action].pos) {
                         soundEffect.SoundPlay(PINPON);
-                        score += 10;
+                        score += point[StageLevel, i]; ;
                         scoreLabel.Text = " てんすう: " + score.ToString("####0");
                         if (score > highscore) {
                             highscore = score;
@@ -270,8 +273,8 @@ namespace fiiFlag
                     } else {
                         soundEffect.SoundPlay(BUU);
                     }
-                    Speed += 0.08f;
-                    Wait -= 38;
+                    Speed += ds[StageLevel];
+                    Wait -= dw[StageLevel];
                     if (Wait <= 0) {
                         Wait = 0;
                     }
@@ -285,7 +288,7 @@ namespace fiiFlag
                 await System.Threading.Tasks.Task.Delay(Wait);
                 if (Stat[session[action].col] == session[action].pos) {
                     soundEffect.SoundPlay(PINPON);
-                    score += 10;
+                    score += point[StageLevel, 24];
                     scoreLabel.Text = " てんすう: " + score.ToString("####0");
                     if (score > highscore) {
                         highscore = score;
@@ -310,7 +313,11 @@ namespace fiiFlag
                     _btn[i].IsVisible = false;
                 }
                 VoicePlayer.Stop();
-                await VoicePlayer.PlayAsync(Gameover[r.Next(0, 4)], 1.0f);
+                if(StageLevel == KICHIKU) {
+                    await VoicePlayer.PlayAsync(Gameover[4], 1.0f);
+                } else {
+                    await VoicePlayer.PlayAsync(Gameover[r.Next(0, 4)], 1.0f);
+                }
                 await Task.Run(TalkWait);
                 await System.Threading.Tasks.Task.Delay(200);
                 btnStart.IsVisible = false;
