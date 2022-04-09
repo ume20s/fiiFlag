@@ -27,7 +27,8 @@ namespace fiiFlag
         private ExImage[] _btn;             // ボタンのイメージコントロール配列
         private Image[,,] _fii;             // ふぃーちゃんイメージコントロール配列
         private bool NowPlaying = false;    // ゲーム中フラグ
-        private float Speed;                // セリフスピード
+        private bool NoMiss = true;        // パーフェクトフラグ
+        private float Speed;                // 発声スピード
         private int Wait;                   // セリフ間ウエイト
         private int score;                  // スコア
         private int highscore;              // ハイスコア
@@ -76,6 +77,11 @@ namespace fiiFlag
         // カウントダウンのセリフの配列
         string[] CountDown = new string[3] {
             "ichi","ni","san"
+        };
+
+        // カウントダウンのセリフの配列
+        string[] Perfect = new string[2] {
+            "Perfect0","Perfect1"
         };
 
         // ゲームオーバーのセリフの配列
@@ -230,6 +236,9 @@ namespace fiiFlag
                 // ナウプレイング
                 NowPlaying = true;
 
+                // パーフェクトフラグ
+                NoMiss = true;
+
                 // もろもろの初期化
                 InitFii();
 
@@ -240,7 +249,7 @@ namespace fiiFlag
                     VoicePlayer.Stop();
                     await VoicePlayer.PlayAsync(CountDown[i - 1], 1.0f);
                     await Task.Run(TalkWait);
-                    await System.Threading.Tasks.Task.Delay(500);
+                    await System.Threading.Tasks.Task.Delay(200);
                     i -= 1;
                 }
 
@@ -272,6 +281,7 @@ namespace fiiFlag
                         }
                     } else {
                         soundEffect.SoundPlay(BUU);
+                        NoMiss = false;
                     }
                     Speed += ds[StageLevel];
                     Wait -= dw[StageLevel];
@@ -296,6 +306,7 @@ namespace fiiFlag
                     }
                 } else {
                     soundEffect.SoundPlay(BUU);
+                    NoMiss = false;
                 }
 
                 // ちょい待ってから
@@ -306,19 +317,27 @@ namespace fiiFlag
                     sw.Write(highscore.ToString());
                 }
 
-                // もういっかいボタンを表示して終了
+                // ゲームオーバー表示
                 btnStart.Text = "げえむおおばぁ";
                 btnStart.IsVisible = true;
                 for (i = 0; i < 4; i++) {
                     _btn[i].IsVisible = false;
                 }
+
+                // 終了音声
                 VoicePlayer.Stop();
-                if(StageLevel == KICHIKU) {
-                    await VoicePlayer.PlayAsync(Gameover[4], 1.0f);
+                if (NoMiss == true) {
+                    await VoicePlayer.PlayAsync(Perfect[r.Next(0, 2)], 1.0f);
                 } else {
-                    await VoicePlayer.PlayAsync(Gameover[r.Next(0, 4)], 1.0f);
+                    if (StageLevel == KICHIKU) {
+                        await VoicePlayer.PlayAsync(Gameover[4], 1.0f);
+                    } else {
+                        await VoicePlayer.PlayAsync(Gameover[r.Next(0, 4)], 1.0f);
+                    }
                 }
                 await Task.Run(TalkWait);
+
+                // もういっかいボタンを表示して終了
                 await System.Threading.Tasks.Task.Delay(200);
                 btnStart.IsVisible = false;
                 btnOnemore.IsVisible = true;

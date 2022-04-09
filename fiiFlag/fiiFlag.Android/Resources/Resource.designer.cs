@@ -18869,46 +18869,52 @@ namespace fiiFlag.Droid
 			public const int ni = 2131623954;
 			
 			// aapt resource value: 0x7F0E0013
-			public const int pinpon = 2131623955;
+			public const int Perfect0 = 2131623955;
 			
 			// aapt resource value: 0x7F0E0014
-			public const int san = 2131623956;
+			public const int Perfect1 = 2131623956;
 			
 			// aapt resource value: 0x7F0E0015
-			public const int ShiroAgenai = 2131623957;
+			public const int pinpon = 2131623957;
 			
 			// aapt resource value: 0x7F0E0016
-			public const int ShiroAgenaide = 2131623958;
+			public const int san = 2131623958;
 			
 			// aapt resource value: 0x7F0E0017
-			public const int ShiroAgeru = 2131623959;
+			public const int ShiroAgenai = 2131623959;
 			
 			// aapt resource value: 0x7F0E0018
-			public const int ShiroAgete = 2131623960;
+			public const int ShiroAgenaide = 2131623960;
 			
 			// aapt resource value: 0x7F0E0019
-			public const int ShiroSagenai = 2131623961;
+			public const int ShiroAgeru = 2131623961;
 			
 			// aapt resource value: 0x7F0E001A
-			public const int ShiroSagenaide = 2131623962;
+			public const int ShiroAgete = 2131623962;
 			
 			// aapt resource value: 0x7F0E001B
-			public const int ShiroSageru = 2131623963;
+			public const int ShiroSagenai = 2131623963;
 			
 			// aapt resource value: 0x7F0E001C
-			public const int ShiroSagete = 2131623964;
+			public const int ShiroSagenaide = 2131623964;
 			
 			// aapt resource value: 0x7F0E001D
-			public const int Startin1 = 2131623965;
+			public const int ShiroSageru = 2131623965;
 			
 			// aapt resource value: 0x7F0E001E
-			public const int Startin2 = 2131623966;
+			public const int ShiroSagete = 2131623966;
 			
 			// aapt resource value: 0x7F0E001F
-			public const int Startin3 = 2131623967;
+			public const int Startin1 = 2131623967;
 			
 			// aapt resource value: 0x7F0E0020
-			public const int StartinKichiku = 2131623968;
+			public const int Startin2 = 2131623968;
+			
+			// aapt resource value: 0x7F0E0021
+			public const int Startin3 = 2131623969;
+			
+			// aapt resource value: 0x7F0E0022
+			public const int StartinKichiku = 2131623970;
 			
 			static Raw()
 			{

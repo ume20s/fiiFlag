@@ -19,20 +19,20 @@
                 <RowDefinition Height="1.2*" />
             </Grid.RowDefinitions>
             <app:BaseLabel Grid.Row="0" Grid.Column="0"  Grid.ColumnSpan="3"
-                   FontSize="30" Text = "なんいどせんたく" HorizontalOptions="Center" VerticalOptions="Center" />
+                   FontSize="30" TextColor="#000000" Text = "なんいどせんたく" HorizontalOptions="Center" VerticalOptions="Center" />
             <app:BaseLabel Grid.Row="2" Grid.Column="0" 
-                   FontSize="22" Text = "かんたん" HorizontalOptions="Center" VerticalOptions="Center" />
+                   FontSize="22" TextColor="#000000" Text = "かんたん" HorizontalOptions="Center" VerticalOptions="Center" />
             <app:BaseLabel Grid.Row="3" Grid.Column="0" 
-                   FontSize="22" Text = "ふつう" HorizontalOptions="Center" VerticalOptions="Center" />
+                   FontSize="22" TextColor="#000000" Text = "ふつう" HorizontalOptions="Center" VerticalOptions="Center" />
             <app:BaseLabel Grid.Row="4" Grid.Column="0" 
-                   FontSize="22" Text = "きちく" HorizontalOptions="Center" VerticalOptions="Center" />
+                   FontSize="22" TextColor="#000000" Text = "きちく" HorizontalOptions="Center" VerticalOptions="Center" />
             <RadioButton x:Name="Kantan" Grid.Column="1" Grid.Row="2"
                          CheckedChanged="OnKantanCheckedChanged"/>
             <RadioButton x:Name="Futu" Grid.Column="1" Grid.Row="3" IsChecked="True"
                          CheckedChanged="OnFutuCheckedChanged"/>
             <RadioButton x:Name="Kichiku" Grid.Column="1" Grid.Row="4"
                          CheckedChanged="OnKichikuCheckedChanged"/>
-            <app:BaseButton Text="これで おけ" Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="3"
+            <app:BaseButton TextColor="#000000" Text="これで おけ" Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="3"
                    FontSize="36" Clicked="OnGameButtonClicked" />
         </Grid>
     </ContentPage.Content>
